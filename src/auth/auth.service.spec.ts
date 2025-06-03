@@ -5,6 +5,8 @@ import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
 import { ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -24,6 +26,12 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          secret: jwtConstants.secret,
+          signOptions: { expiresIn: '15m' },
+        }),
+      ],
       providers: [
         AuthService,
         {

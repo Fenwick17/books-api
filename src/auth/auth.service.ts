@@ -1,9 +1,6 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { User } from '@prisma/client';
@@ -14,6 +11,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private prisma: PrismaService,
+    private jwtService: JwtService,
   ) {}
 
   private async checkUserExists(email: string): Promise<void> {
@@ -37,5 +35,12 @@ export class AuthService {
       return user;
     }
     return null;
+  }
+
+  async login(user: any): Promise<any> {
+    const payload = { email: user.email, sub: user.userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

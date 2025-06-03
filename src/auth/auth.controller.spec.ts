@@ -4,6 +4,8 @@ import { PrismaService } from '../prisma.service';
 import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -12,7 +14,13 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UsersModule],
+      imports: [
+        UsersModule,
+        JwtModule.register({
+          secret: jwtConstants.secret,
+          signOptions: { expiresIn: '15m' },
+        }),
+      ],
       controllers: [AuthController],
       providers: [AuthService, PrismaService],
     }).compile();
@@ -45,6 +53,22 @@ describe('AuthController', () => {
 
       expect(response).toEqual(result);
       expect(spy).toHaveBeenCalledWith(userDto);
+    });
+  });
+
+  describe('getProfile', () => {
+    it('should return the current user from the request', () => {
+      const mockUser = {
+        id: 1,
+        email: 'test@example.com',
+      };
+
+      const mockReq = {
+        user: mockUser,
+      };
+
+      const result = controller.getProfile(mockReq);
+      expect(result).toEqual(mockUser);
     });
   });
 });
