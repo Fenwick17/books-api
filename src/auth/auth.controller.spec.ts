@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { Role } from './roles/role.enum';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -41,11 +42,13 @@ describe('AuthController', () => {
         id: 1,
         email: 'test@example.com',
         password: hashedPassword,
+        roles: [Role.User],
       };
 
       const userDto = {
         email: 'test@example.com',
         password: 'password',
+        roles: [Role.User],
       };
 
       const spy = jest.spyOn(service, 'register').mockResolvedValue(result);

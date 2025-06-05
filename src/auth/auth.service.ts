@@ -19,7 +19,7 @@ export class AuthService {
       where: { email },
     });
     if (existingUser) {
-      throw new ConflictException('User already exists'); // 409 Conflict
+      throw new ConflictException('User already exists');
     }
   }
 
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   async login(user: any): Promise<any> {
-    const payload = { email: user.email, sub: user.userId };
+    const payload = { email: user.email, sub: user.userId, roles: user.roles };
     return {
       access_token: this.jwtService.sign(payload),
     };

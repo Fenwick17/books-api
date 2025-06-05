@@ -3,6 +3,7 @@ import { BooksController } from './books.controller';
 import { BooksService } from './books.service';
 import { PrismaService } from '../prisma.service';
 import { NotFoundException } from '@nestjs/common';
+import { AuthModule } from '../auth/auth.module';
 
 describe('BooksController', () => {
   let booksService: BooksService;
@@ -21,6 +22,7 @@ describe('BooksController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [BooksController],
+      imports: [AuthModule],
       providers: [
         BooksService,
         {

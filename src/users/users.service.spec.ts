@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaService } from '../prisma.service';
+import { Role } from '../auth/roles/role.enum';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -12,7 +13,12 @@ describe('UsersService', () => {
     },
   };
 
-  const mockUser = { id: 1, email: 'test@example.com', password: 'password' };
+  const mockUser = {
+    id: 1,
+    email: 'test@example.com',
+    password: 'password',
+    roles: [Role.User],
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

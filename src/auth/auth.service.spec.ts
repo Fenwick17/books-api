@@ -7,6 +7,7 @@ import { ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { Role } from './roles/role.enum';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -57,11 +58,13 @@ describe('AuthService', () => {
     const createUserDto: CreateUserDto = {
       email: 'test@example.com',
       password: 'password',
+      roles: [Role.Admin],
     };
     const mockedUser = {
       id: 1,
       email: 'test@example.com',
       password: hashedPassword,
+      roles: [Role.Admin],
     };
 
     jest.spyOn(prismaMock.user, 'findUnique').mockResolvedValue(null);
@@ -75,12 +78,14 @@ describe('AuthService', () => {
     const createUserDto: CreateUserDto = {
       email: 'test@example.com',
       password: 'password',
+      roles: [Role.User],
     };
 
     const existingUser = {
       id: 1,
       email: 'existing@example.com',
       password: 'hashed',
+      roles: [Role.User],
     };
 
     prismaMock.user.findUnique.mockResolvedValue(existingUser);
