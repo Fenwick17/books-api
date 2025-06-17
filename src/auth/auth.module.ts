@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../../secrets';
 import { PrismaService } from '../prisma.service';
 import { LocalStrategy } from './local.strategy';
 
@@ -21,4 +21,4 @@ import { LocalStrategy } from './local.strategy';
   providers: [AuthService, PrismaService, LocalStrategy],
   exports: [JwtModule],
 })
-export class AuthModule {}
+export class AuthModule { }

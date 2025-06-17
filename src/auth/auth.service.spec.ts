@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../../secrets';
 import { Role } from './roles/role.enum';
 
 describe('AuthService', () => {

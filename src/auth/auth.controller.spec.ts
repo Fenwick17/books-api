@@ -5,7 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../../secrets';
 import { Role } from './roles/role.enum';
 
 describe('AuthController', () => {
